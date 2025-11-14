@@ -1,0 +1,41 @@
+# =====================================================================
+# Configuration globale partagée par tous les microservices
+# Projet : gestion-alumni (UASZ)
+# Repository : gestion-alumni-config
+# =====================================================================
+
+spring:
+  application:
+    name: global-config
+
+  cloud:
+    config:
+      enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: false  # Désactive la découverte automatique des routes
+
+# Configuration globale des logs
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Gestion des erreurs serveur
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Actuator accessible pour tous les microservices
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
