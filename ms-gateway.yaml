@@ -1,0 +1,25 @@
+server:
+  port: 8088
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: etudiant-service
+          uri: lb://ms-etudiant
+          predicates:
+            - Path=/etudiants/**
+  eureka:
+    client:
+      service-url:
+        defaultZone: http://localhost:8761/eureka
+      healthcheck:
+        enabled: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
