@@ -9,14 +9,30 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: etudiant-service
-          uri: lb://ms-etudiant
+        - id: ms-user-utilisateurs
+          uri: lb://ms-user
           predicates:
-            - Path=/etudiants/**
+            - Path=/api/utilisateurs/**
+
+        - id: ms-user-auth
+          uri: lb://ms-user
+          predicates:
+            - Path=/api/auth/**
+
+        - id: ms-user-etudiants
+          uri: lb://ms-user
+          predicates:
+            - Path=/api/etudiants/**
+
+        - id: ms-user-alumni
+          uri: lb://ms-user
+          predicates:
+            - Path=/api/alumni/**
+
   eureka:
     client:
       service-url:
-        defaultZone: http://localhost:8761/eureka
+        defaultZone: http://ms-discover:8761/eureka
       healthcheck:
         enabled: true
 
