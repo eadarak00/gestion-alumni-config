@@ -7,6 +7,12 @@
 
 #   cloud:
 #     gateway:
+#       discovery:
+#         locator:
+#           enabled: true
+#           lower-case-service-id: true
+      
+#       # Configuration webflux conservée
 #       server:
 #         webflux:
 #           routes:
@@ -14,7 +20,9 @@
 #               uri: lb://ms-user
 #               predicates:
 #                 - Path=/api/v1/**
-      
+#               filters:
+#                 - StripPrefix=1
+
 #       globalcors:
 #         cors-configurations:
 #           '[/**]':
@@ -28,24 +36,30 @@
 #               - OPTIONS
 
 #       httpclient:
-#         connect-timeout: 1000
-#         response-timeout: 5s
-
-#       discovery:
-#         locator:
-#           enabled: false
+#         connect-timeout: 5000
+#         response-timeout: 10s
 
 # eureka:
 #   client:
 #     service-url:
-#       defaultZone: http://localhost:8761/eureka
+#       defaultZone: http://ms-discover:8761/eureka  # CORRIGÉ: ms-discover au lieu de localhost
+#     fetch-registry: true
+#     register-with-eureka: true
 #     healthcheck:
 #       enabled: true
+
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: health,info,metrics,gateway
 
 # logging:
 #   level:
 #     org.springframework.cloud.gateway: DEBUG
-
+#     org.springframework.cloud.gateway.route: TRACE
+#     org.springframework.cloud.client.discovery: DEBUG
+#     com.netflix.discovery: DEBUG
 
 server:
   port: 8088
@@ -60,29 +74,20 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-      
-      # Configuration webflux conservée
-      server:
-        webflux:
-          routes:
-            - id: ms-user
-              uri: lb://ms-user
-              predicates:
-                - Path=/api/v1/**
-              filters:
-                - StripPrefix=1
+
+      routes:
+        # --- Routes API ms-user ---
+        - id: ms-user
+          uri: lb://ms-user
+          predicates:
+            - Path=/api/v1/**
 
       globalcors:
         cors-configurations:
           '[/**]':
             allowedOrigins: "*"
             allowedHeaders: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
+            allowedMethods: "*"
 
       httpclient:
         connect-timeout: 5000
@@ -91,7 +96,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://ms-discover:8761/eureka  # CORRIGÉ: ms-discover au lieu de localhost
+      defaultZone: http://ms-discover:8761/eureka
     fetch-registry: true
     register-with-eureka: true
     healthcheck:
@@ -106,6 +111,3 @@ management:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
-    org.springframework.cloud.gateway.route: TRACE
-    org.springframework.cloud.client.discovery: DEBUG
-    com.netflix.discovery: DEBUG
