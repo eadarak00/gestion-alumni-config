@@ -28,6 +28,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://ms-discover:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
 
 logging:
   level:
@@ -37,7 +39,10 @@ logging:
 
 springdoc:
   api-docs:
+    path: /v3/api-docs
     enabled: true
   swagger-ui:
+    path: /swagger-ui.html
     enabled: true
-
+    config-url: /v3/api-docs/swagger-config
+    url: /v3/api-docs

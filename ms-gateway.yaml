@@ -9,53 +9,39 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        # 👉 Swagger UI (nouvelle URL Springdoc)
-        - id: swagger-ui
-          uri: lb://ms-user
-          predicates:
-            - Path=/swagger-ui/**
-        
-        # 👉 Requête principale de la page Swagger
-        - id: swagger-ui-index
-          uri: lb://ms-user
-          predicates:
-            - Path=/swagger-ui/index.html
-
-        # 👉 OpenAPI JSON
+        # OpenAPI JSON (doit être avant les autres routes)
         - id: openapi
           uri: lb://ms-user
           predicates:
             - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs(?<segment>/?.*), /v3/api-docs$\{segment}
 
-        # 👉 Swagger : ressources statiques
-        - id: swagger-resources
+        # Swagger UI
+        - id: swagger-ui
           uri: lb://ms-user
           predicates:
             - Path=/swagger-ui/**
-        
-        - id: ms-user-utilisateurs
-          uri: lb://ms-user
-          predicates:
-            - Path=/api/v1/utilisateurs/**
+          filters:
+            - RewritePath=/swagger-ui/(?<segment>.*), /swagger-ui/$\{segment}
 
-        - id: ms-user-auth
+        # Swagger resources
+        - id: swagger-resources
           uri: lb://ms-user
           predicates:
-            - Path=/api/v1/auth/**
+            - Path=/swagger-resources/**
 
-        - id: ms-user-etudiants
+        # Webjars pour Swagger
+        - id: webjars
           uri: lb://ms-user
           predicates:
-            - Path=/api/v1/etudiants/**
+            - Path=/webjars/**
 
-        - id: ms-user-alumni
+        # Routes API ms-user
+        - id: ms-user-api
           uri: lb://ms-user
           predicates:
-            - Path=/api/v1/alumni/**
-        - id: ms-user-test
-          uri: lb://ms-user
-          predicates:
-            - Path=/api/v1/test/**
+            - Path=/api/v1/**
 
   eureka:
     client:
@@ -67,3 +53,4 @@ spring:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway.route: TRACE
