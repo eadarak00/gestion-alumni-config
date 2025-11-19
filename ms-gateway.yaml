@@ -9,6 +9,30 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
+         # 🔹 Swagger UI (HTML)
+        - id: swagger-ui
+          uri: lb://ms-user
+          predicates:
+            - Path=/swagger-ui.html
+
+        # 🔹 Swagger static resources
+        - id: swagger-ui-resources
+          uri: lb://ms-user
+          predicates:
+            - Path=/swagger-ui/**
+
+        # 🔹 OpenAPI JSON
+        - id: openapi
+          uri: lb://ms-user
+          predicates:
+            - Path=/v3/api-docs
+
+        # 🔹 OpenAPI groups
+        - id: openapi-groups
+          uri: lb://ms-user
+          predicates:
+            - Path=/v3/api-docs/**
+        
         - id: ms-user-utilisateurs
           uri: lb://ms-user
           predicates:
