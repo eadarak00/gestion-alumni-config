@@ -1,60 +1,108 @@
+# # server:
+# #   port: 8088
+
+# # spring:
+# #   application:
+# #     name: ms-gateway
+# #   cloud:
+# #     gateway:
+# #       discovery:
+# #         locator:
+# #           enabled: true
+# #           lower-case-service-id: true
+# #       routes:
+# #         # Route pour Swagger UI
+# #         - id: swagger-ui
+# #           uri: lb://ms-user
+# #           predicates:
+# #             - Path=/swagger-ui.html
+# #           filters:
+# #             - SetPath=/
+
+# #         # Route pour les ressources Swagger
+# #         - id: swagger-resources
+# #           uri: lb://ms-user
+# #           predicates:
+# #             - Path=/swagger-resources/**
+
+# #         # Route pour webjars
+# #         - id: webjars
+# #           uri: lb://ms-user
+# #           predicates:
+# #             - Path=/webjars/**
+
+# #         # Route pour l'API docs
+# #         - id: api-docs
+# #           uri: lb://ms-user
+# #           predicates:
+# #             - Path=/v3/api-docs/**
+
+# #         # Route principale pour ms-user
+# #         - id: ms-user
+# #           uri: lb://ms-user
+# #           predicates:
+# #             - Path=/api/v1/**
+
+# # eureka:
+# #   client:
+# #     service-url:
+# #       defaultZone: http://ms-discover:8761/eureka
+# #     fetch-registry: true
+# #     register-with-eureka: true
+
+# # logging:
+# #   level:
+# #     org.springframework.cloud.gateway: DEBUG
+# #     org.springframework.cloud.gateway.route: TRACE
+
+
 # server:
 #   port: 8088
 
 # spring:
 #   application:
 #     name: ms-gateway
+
 #   cloud:
 #     gateway:
+#       server:
+#         webflux:
+#           routes:
+#            - id: ms-user
+#               uri: lb://ms-user
+#               predicates:
+#             - Path=/api/v1/**
+
+#       globalcors:
+#         cors-configurations:
+#           '[/**]':
+#             allowedOrigins: "*"
+#             allowedHeaders: "*"
+#             allowedMethods:
+#               - GET
+#               - POST
+#               - PUT
+#               - DELETE
+#               - OPTIONS
+
+#       httpclient:
+#         connect-timeout: 1000
+#         response-timeout: 5s
+
 #       discovery:
 #         locator:
-#           enabled: true
-#           lower-case-service-id: true
-#       routes:
-#         # Route pour Swagger UI
-#         - id: swagger-ui
-#           uri: lb://ms-user
-#           predicates:
-#             - Path=/swagger-ui.html
-#           filters:
-#             - SetPath=/
-
-#         # Route pour les ressources Swagger
-#         - id: swagger-resources
-#           uri: lb://ms-user
-#           predicates:
-#             - Path=/swagger-resources/**
-
-#         # Route pour webjars
-#         - id: webjars
-#           uri: lb://ms-user
-#           predicates:
-#             - Path=/webjars/**
-
-#         # Route pour l'API docs
-#         - id: api-docs
-#           uri: lb://ms-user
-#           predicates:
-#             - Path=/v3/api-docs/**
-
-#         # Route principale pour ms-user
-#         - id: ms-user
-#           uri: lb://ms-user
-#           predicates:
-#             - Path=/api/v1/**
+#           enabled: false
 
 # eureka:
 #   client:
 #     service-url:
-#       defaultZone: http://ms-discover:8761/eureka
-#     fetch-registry: true
-#     register-with-eureka: true
+#       defaultZone: http://localhost:8761/eureka
+#     healthcheck:
+#       enabled: true
 
 # logging:
 #   level:
 #     org.springframework.cloud.gateway: DEBUG
-#     org.springframework.cloud.gateway.route: TRACE
-
 
 server:
   port: 8088
@@ -68,11 +116,11 @@ spring:
       server:
         webflux:
           routes:
-           - id: ms-user
-          uri: lb://ms-user
-          predicates:
-            - Path=/api/v1/**
-
+            - id: ms-user
+              uri: lb://ms-user
+              predicates:
+                - Path=/api/v1/**
+      
       globalcors:
         cors-configurations:
           '[/**]':
