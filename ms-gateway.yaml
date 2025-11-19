@@ -9,29 +9,29 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-         # 🔹 Swagger UI (HTML)
+        # 👉 Swagger UI (nouvelle URL Springdoc)
         - id: swagger-ui
           uri: lb://ms-user
           predicates:
-            - Path=/swagger-ui.html
-
-        # 🔹 Swagger static resources
-        - id: swagger-ui-resources
+            - Path=/swagger-ui/**
+        
+        # 👉 Requête principale de la page Swagger
+        - id: swagger-ui-index
           uri: lb://ms-user
           predicates:
-            - Path=/swagger-ui/**
+            - Path=/swagger-ui/index.html
 
-        # 🔹 OpenAPI JSON
+        # 👉 OpenAPI JSON
         - id: openapi
           uri: lb://ms-user
           predicates:
-            - Path=/v3/api-docs
+            - Path=/v3/api-docs/**
 
-        # 🔹 OpenAPI groups
-        - id: openapi-groups
+        # 👉 Swagger : ressources statiques
+        - id: swagger-resources
           uri: lb://ms-user
           predicates:
-            - Path=/v3/api-docs/**
+            - Path=/swagger-ui/**
         
         - id: ms-user-utilisateurs
           uri: lb://ms-user
