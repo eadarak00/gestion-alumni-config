@@ -52,6 +52,10 @@ spring:
           uri: lb://ms-user
           predicates:
             - Path=/api/v1/alumni/**
+        - id: ms-user-test
+          uri: lb://ms-user
+          predicates:
+            - Path=/api/v1/test/**
 
   eureka:
     client:
