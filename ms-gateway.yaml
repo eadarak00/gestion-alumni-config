@@ -2,6 +2,8 @@ server:
   port: 8088
 
 spring:
+  application:
+    name: ms-gateway
   cloud:
     gateway:
       discovery:
@@ -9,46 +11,44 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        # OpenAPI JSON (doit être avant les autres routes)
-        - id: openapi
-          uri: lb://ms-user
-          predicates:
-            - Path=/v3/api-docs/**
-          filters:
-            - RewritePath=/v3/api-docs(?<segment>/?.*), /v3/api-docs$\{segment}
-
-        # Swagger UI
+        # Route pour Swagger UI
         - id: swagger-ui
           uri: lb://ms-user
           predicates:
-            - Path=/swagger-ui/**
+            - Path=/swagger-ui.html
           filters:
-            - RewritePath=/swagger-ui/(?<segment>.*), /swagger-ui/$\{segment}
+            - SetPath=/
 
-        # Swagger resources
+        # Route pour les ressources Swagger
         - id: swagger-resources
           uri: lb://ms-user
           predicates:
             - Path=/swagger-resources/**
 
-        # Webjars pour Swagger
+        # Route pour webjars
         - id: webjars
           uri: lb://ms-user
           predicates:
             - Path=/webjars/**
 
-        # Routes API ms-user
-        - id: ms-user-api
+        # Route pour l'API docs
+        - id: api-docs
+          uri: lb://ms-user
+          predicates:
+            - Path=/v3/api-docs/**
+
+        # Route principale pour ms-user
+        - id: ms-user
           uri: lb://ms-user
           predicates:
             - Path=/api/v1/**
 
-  eureka:
-    client:
-      service-url:
-        defaultZone: http://ms-discover:8761/eureka
-      healthcheck:
-        enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://ms-discover:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
 
 logging:
   level:
