@@ -1,15 +1,18 @@
+server:
+  port: 8761
+
 spring:
   application:
     name: ms-discover
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: ms-discover
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://ms-discover:8761/eureka
 
 logging:
   level:
