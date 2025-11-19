@@ -12,22 +12,22 @@ spring:
         - id: ms-user-utilisateurs
           uri: lb://ms-user
           predicates:
-            - Path=/api/utilisateurs/**
+            - Path=/api/v1/utilisateurs/**
 
         - id: ms-user-auth
           uri: lb://ms-user
           predicates:
-            - Path=/api/auth/**
+            - Path=/api/v1/auth/**
 
         - id: ms-user-etudiants
           uri: lb://ms-user
           predicates:
-            - Path=/api/etudiants/**
+            - Path=/api/v1/etudiants/**
 
         - id: ms-user-alumni
           uri: lb://ms-user
           predicates:
-            - Path=/api/alumni/**
+            - Path=/api/v1/alumni/**
 
   eureka:
     client:
