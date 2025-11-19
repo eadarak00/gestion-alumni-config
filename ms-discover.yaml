@@ -14,6 +14,12 @@ eureka:
     service-url:
       defaultZone: http://ms-discover:8761/eureka
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
 logging:
   level:
     com.netflix.eureka: INFO
