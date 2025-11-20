@@ -77,15 +77,10 @@ spring:
 
       routes:
         # --- Routes API ms-user ---
-        - id: ms-user-auth
+        - id: ms-user
           uri: lb://ms-user
           predicates:
-            - Path=/api/v1/auth/**
-
-        - id: ms-user-validation
-          uri: lb://ms-user
-          predicates:
-            - Path=/api/v1/validation/**
+            - Path=/api/v1/auth/**,/api/v1/validation/**
 
       globalcors:
         cors-configurations:
