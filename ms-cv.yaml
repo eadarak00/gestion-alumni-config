@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     url: jdbc:mariadb://ms-cv-db:3306/db_user?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
-    username: user
-    password: passer123
+    username: cvuser
+    password: cvpasser123
     driver-class-name: org.mariadb.jdbc.Driver
     hikari:
       connection-timeout: 60000
