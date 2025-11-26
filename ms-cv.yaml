@@ -48,10 +48,11 @@ management:
 
 springdoc:
   api-docs:
-    path: /v3/api-docs
+    path: /ms-cv/api-docs       # endpoint pour récupérer le JSON OpenAPI
   swagger-ui:
-    path: /swagger-ui.html
+    path: /ms-cv/swagger-ui.html # endpoint pour accéder à l'interface Swagger UI
     enabled: true
+
 
 logging:
   level:
