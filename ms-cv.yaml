@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://ms-cv-db:3306/db_user?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mariadb://ms-cv-db:3306/db_cv?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
     username: cvuser
     password: cvpass123
     driver-class-name: org.mariadb.jdbc.Driver
