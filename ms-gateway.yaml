@@ -80,7 +80,7 @@ spring:
         - id: ms-user
           uri: lb://ms-user
           predicates:
-            - Path=/api/v1/auth/**,/api/v1/validation/**
+            - Path=/api/v1/auth/**,/api/v1/validation/**, /ms-user/**
 
       globalcors:
         cors-configurations:
