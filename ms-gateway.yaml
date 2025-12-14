@@ -1,3 +1,4 @@
+# ...existing code...
 server:
   port: 8088
 
@@ -13,11 +14,15 @@ spring:
           lower-case-service-id: true
 
       routes:
-        # --- Routes API ms-user ---
-        - id: ms-user
+        - id: ms-user-api-users
           uri: lb://ms-user
           predicates:
-            - Path=/api-users/v1/**, /ms-user/**
+            - Path=/api-users/v1/**
+
+        - id: ms-user-ms
+          uri: lb://ms-user
+          predicates:
+            - Path=/ms-user/**
 
       globalcors:
         cors-configurations:
@@ -48,3 +53,4 @@ management:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+# ...existing code...
