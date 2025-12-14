@@ -17,7 +17,7 @@ spring:
         - id: ms-user
           uri: lb://ms-user
           predicates:
-            - Path=/api/v1/ms-user/**, /ms-user/**
+            - Path=/api-users/v1/**, /ms-user/**
 
       globalcors:
         cors-configurations:
