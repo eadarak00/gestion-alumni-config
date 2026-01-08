@@ -61,3 +61,10 @@ logging:
     org.springframework.cloud: DEBUG
     com.netflix.eureka: DEBUG
     com.netflix.discovery: DEBUG
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
