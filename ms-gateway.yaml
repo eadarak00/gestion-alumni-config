@@ -58,4 +58,3 @@ management:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
-# ...existing code...
