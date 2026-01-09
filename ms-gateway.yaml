@@ -24,7 +24,7 @@ spring:
             - Path=/ms-user/**
 
         - id: ms-cv-v2
-          uri: lb://ms-cv2
+          uri: lb://ms-cv-v2
           predicates:
             - Path=/api-ms-cv2/**
 
